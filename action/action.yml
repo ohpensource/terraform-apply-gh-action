@@ -22,6 +22,10 @@ inputs:
   terraform-outputs-file:
     description: "File where terraform will print the configuration outputs"
     required: false
+  session-name:
+    description: "IAM session name that will tag your sts-assume-role operation."
+    required: false
+    default: 'undefined'
 outputs:
   outputs-file:
     description: 'outputs file'
@@ -38,5 +42,6 @@ runs:
           -t ${{ inputs.terraform-folder }} \
           -b ${{ inputs.backend-configuration }} \
           -p ${{ inputs.terraform-plan-file }} \
-          -o ${{ inputs.terraform-outputs-file }}
+          -o ${{ inputs.terraform-outputs-file }} \
+          -n ${{ inputs.session-name }}
       shell: bash
