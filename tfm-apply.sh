@@ -16,9 +16,20 @@ set_up_aws_user_credentials() {
     export AWS_SECRET_ACCESS_KEY=$3
 }
 
-log_action "planning terraform"
+terraform_init() {
+    backend_config_file=$1
+    session_name_value=$2
 
-while getopts r:a:s:t:b:p:o: flag
+    if [[ "${session_name_value}" == 'undefined' ]]; then
+        terraform init -backend-config="$backend_config_file"
+    else
+        terraform init -backend-config="$backend_config_file" -backend-config="session_name=$session_name_value"
+    fi
+}
+
+log_action "applying terraform"
+
+while getopts r:a:s:t:b:p:o:n: flag
 do
     case "${flag}" in
        r) region=${OPTARG};;
@@ -28,6 +39,7 @@ do
        b) backend_config_file=${OPTARG};;
        p) tfm_plan=${OPTARG};;
        o) tfm_outputs=${OPTARG};;
+       n) session_name_value=${OPTARG};;
     esac
 done
 
@@ -45,7 +57,7 @@ tfm_plan="$working_folder/$tfm_plan"
 
 folder="$working_folder/$tfm_folder"
 cd $folder
-    terraform init -backend-config="$backend_config_file"
+    terraform_init $backend_config_file $session_name_value
     terraform apply "$tfm_plan"
     if [ "$tfm_outputs" != "" ]; then 
         tfm_outputs="$working_folder/$tfm_outputs"
