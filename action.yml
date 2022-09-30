@@ -35,13 +35,13 @@ runs:
   steps:
     - id: tfm-apply
       run: |
-        ${{ github.action_path }}/../tfm-apply.sh \
+        ${{ github.action_path }}/tfm-apply.sh \
           -r "${{ inputs.region }}" \
           -a "${{ inputs.access-key }}" \
-          -s ${{ inputs.secret-key }} \
-          -t ${{ inputs.terraform-folder }} \
-          -b ${{ inputs.backend-configuration }} \
-          -p ${{ inputs.terraform-plan-file }} \
-          -o ${{ inputs.terraform-outputs-file }} \
-          -n ${{ inputs.session-name }}
+          -s "${{ inputs.secret-key }}" \
+          -t "${{ inputs.terraform-folder }}" \
+          -b "${{ inputs.backend-configuration }}" \
+          -p "${{ inputs.terraform-plan-file }}" \
+          -o "${{ inputs.terraform-outputs-file }}" \
+          -n "${{ inputs.session-name }}"
       shell: bash

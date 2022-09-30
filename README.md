@@ -53,7 +53,7 @@ jobs:
         with:
           name: deployment-team-branch-conf
           path: deployment-team-branch-conf
-      - uses: ohpensource/terraform-apply-gh-action/action@0.1.0.0
+      - uses: ohpensource/terraform-apply-gh-action@1.0.0.0
         name: terraform apply
         with:
           region: $REGION
