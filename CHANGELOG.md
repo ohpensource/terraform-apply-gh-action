@@ -1,3 +1,9 @@
+# :confetti_ball: 1.0.1.0 (2022-10-27T10:32:49.303Z)
+- - -
+## :bug: Fixes
+* LANZ-3337 updated how outputs are been set. now they are stored in GITHUB_OUTPUT (#4)
+- - -
+- - -
 # :confetti_ball: 1.0.0.0 (2022-09-30T20:22:48.041Z)
 - - -
 ## :boom: BREAKING CHANGES
