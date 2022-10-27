@@ -66,4 +66,4 @@ cd $folder
     fi
 cd "$working_folder"
 
-echo "::set-output name=outputs_file::${tfm_outputs}"
+echo "outputs_file=${tfm_outputs}" >> $GITHUB_OUTPUT
