@@ -16,6 +16,15 @@ set_up_aws_user_credentials() {
     export AWS_SECRET_ACCESS_KEY=$3
 }
 
+set_up_aws_user_credentials_profile() {
+    unset AWS_SESSION_TOKEN
+    unset AWS_ACCESS_KEY_ID
+    unset AWS_SECRET_ACCESS_KEY
+
+    export AWS_PROFILE=$1
+}
+
+
 terraform_init() {
     backend_config_file=$1
     session_name_value=$2
@@ -29,7 +38,7 @@ terraform_init() {
 
 log_action "applying terraform"
 
-while getopts r:a:s:t:b:p:o:n: flag
+while getopts r:a:s:t:b:p:o:n:x: flag
 do
     case "${flag}" in
        r) region=${OPTARG};;
@@ -40,6 +49,7 @@ do
        p) tfm_plan=${OPTARG};;
        o) tfm_outputs=${OPTARG};;
        n) session_name_value=${OPTARG};;
+       x) profile=${OPTARG};;
     esac
 done
 
@@ -50,7 +60,12 @@ log_key_value_pair "backend-config-file" $backend_config_file
 log_key_value_pair "terraform-plan-file" $tfm_plan
 log_key_value_pair "terraform-outputs-file" $tfm_outputs
 
-set_up_aws_user_credentials $region $access_key $secret_key
+if [[ -z "$profile" ]]; then
+  set_up_aws_user_credentials "$region" "$access_key" "$secret_key"
+else
+  set_up_aws_user_credentials_profile "$profile"
+fi
+
 
 backend_config_file="$working_folder/$backend_config_file"
 tfm_plan="$working_folder/$tfm_plan"
