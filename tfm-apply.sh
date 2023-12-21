@@ -29,7 +29,7 @@ terraform_init() {
 
 log_action "applying terraform"
 
-while getopts r:a:s:t:b:p:o:n: flag
+while getopts r:a:s:t:b:p:o:n:j: flag
 do
     case "${flag}" in
        r) region=${OPTARG};;
@@ -40,6 +40,7 @@ do
        p) tfm_plan=${OPTARG};;
        o) tfm_outputs=${OPTARG};;
        n) session_name_value=${OPTARG};;
+       j) parallelism=${OPTARG};;
     esac
 done
 
@@ -49,6 +50,7 @@ log_key_value_pair "terraform-folder" $tfm_folder
 log_key_value_pair "backend-config-file" $backend_config_file
 log_key_value_pair "terraform-plan-file" $tfm_plan
 log_key_value_pair "terraform-outputs-file" $tfm_outputs
+log_key_value_pair "parallelism" $parallelism
 
 set_up_aws_user_credentials $region $access_key $secret_key
 
@@ -58,7 +60,7 @@ tfm_plan="$working_folder/$tfm_plan"
 folder="$working_folder/$tfm_folder"
 cd $folder
     terraform_init $backend_config_file $session_name_value
-    terraform apply "$tfm_plan"
+    terraform apply -parallelism=$parallelism "$tfm_plan"
     if [ "$tfm_outputs" != "" ]; then 
         tfm_outputs="$working_folder/$tfm_outputs"
         mkdir -p $(dirname $tfm_outputs)
