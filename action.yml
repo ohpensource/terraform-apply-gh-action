@@ -26,6 +26,10 @@ inputs:
     description: "IAM session name that will tag your sts-assume-role operation."
     required: false
     default: 'undefined'
+  parallelism:
+    description: "parallelism degree on terraform apply. 10 is default and lower values avoid concurrence issues"
+    required: false
+    default: '10'
 outputs:
   outputs-file:
     description: 'outputs file'
@@ -43,5 +47,6 @@ runs:
           -b "${{ inputs.backend-configuration }}" \
           -p "${{ inputs.terraform-plan-file }}" \
           -o "${{ inputs.terraform-outputs-file }}" \
-          -n "${{ inputs.session-name }}"
+          -n "${{ inputs.session-name }}" \
+          -j "${{ inputs.parallelism }}"
       shell: bash
