@@ -1,3 +1,11 @@
+# :confetti_ball: 1.1.0.0 (2023-12-21T10:17:25.232Z)
+- - -
+## :hammer: Features
+* REP-4572: Added Optional parameter to controll parallelism on tfm apply
+## :newspaper: Others
+* chore: REP-4572: Updated readme.
+- - -
+- - -
 # :confetti_ball: 1.0.1.0 (2022-10-27T10:32:49.303Z)
 - - -
 ## :bug: Fixes
